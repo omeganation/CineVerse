@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover the latest movies, trailers, and reviews">
+    <meta name="keywords" content="movies, films, cinema, trailers, reviews">
+    <title>CineVerse | Discover Movies</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Preloader Animation -->
+    <div class="preloader">
+        <div class="film-reel">
+            <div class="film-cell"></div>
+            <div class="film-cell"></div>
+            <div class="film-cell"></div>
+        </div>
+        <div class="loading-text">Ready for Movie Magic...</div>
+    </div>
+     <script>
+    // Fallback 1: DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(removePreloader, 1500);
+    });
+
+    // Fallback 2: window.load
+    window.addEventListener('load', () => {
+      setTimeout(removePreloader, 1000);
+    });
+
+    // Fallback 3: Maximum timeout
+    setTimeout(removePreloader, 5000);
+
+    function removePreloader() {
+      const preloader = document.querySelector('.preloader');
+      if (preloader) {
+        // Immediate visual hide
+        preloader.style.opacity = '0';
+        preloader.style.transition = 'opacity 0.5s ease';
+        
+        // Physical removal after animation
+        setTimeout(() => {
+          preloader.remove();
+          console.log('Preloader forcibly removed');
+        }, 500);
+      }
+    }
+  </script>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">CineVerse</a>
+            <div class="nav-links">
+                <a href="#trending">Trending</a>
+                <a href="#movies">Movies</a>
+                <a href="#genres">Genres</a>
+
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Search movies...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <a href="#trending">Trending</a>
+            <a href="#movies">Movies</a>
+            <a href="#genres">Genres</a>
+            <a href="admin.html">Admin</a>
+            <div class="search-box">
+                <input type="text" placeholder="Search movies...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-slider">
+            <!-- Slides will be added dynamically by JavaScript -->
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">Discover Amazing Movies</h1>
+            <p class="hero-subtitle">Explore the latest releases and timeless classics</p>
+            <a href="#movies" class="btn btn-primary">Browse Movies</a>
+        </div>
+        <div class="hero-slider-controls">
+            <button class="slider-prev"><i class="fas fa-chevron-left"></i></button>
+            <div class="slider-dots"></div>
+            <button class="slider-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+    <!-- In your sidebar/layout -->
+    <div class="ad-container sidebar-ad">
+        <div class="ad-placeholder">
+            <i class="fas fa-bullhorn"></i>
+            <p>Premium Ad Space</p>
+            <small>500x300px | $50/week</small>
+        </div>
+    </div>
+
+
+
+    <!-- Trending Movies -->
+    <section id="trending" class="section trending-section">
+        <div class="container">
+            <h2 class="section-title">Trending Now</h2>
+            <div class="movies-grid" id="trending-movies">
+                <!-- Trending movies will be added dynamically by JavaScript -->
+            </div>
+        </div>
+    </section>
+    <div class="ad-container top-ad">
+        <div class="ad-placeholder">
+            <i class="fas fa-ad"></i>
+            <p>Your Ad Here</p>
+            <small>Contact: tuyizereomega@gmail.com</small>
+        </div>
+    </div>
+
+    <!-- All Movies -->
+    <section id="movies" class="section movies-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">All Movies</h2>
+                <div class="filter-controls">
+                    <select id="genre-filter">
+                        <option value="">All Genres</option>
+                        <!-- Genres will be added dynamically -->
+                    </select>
+                    <select id="year-filter">
+                        <option value="">All Years</option>
+                        <!-- Years will be added dynamically -->
+                    </select>
+                    <select id="rating-filter">
+                        <option value="">All Ratings</option>
+                        <option value="9">9+</option>
+                        <option value="8">8+</option>
+                        <option value="7">7+</option>
+                        <option value="6">6+</option>
+                    </select>
+                </div>
+            </div>
+            <div class="movies-grid" id="all-movies">
+                <!-- All movies will be added dynamically by JavaScript -->
+            </div>
+        </div>
+    </section>
+    <!-- In your movies grid section -->
+    <div class="ad-container mid-content-ad">
+        <div class="ad-placeholder">
+            <i class="fas fa-star"></i>
+            <p>Sponsored Spot</p>
+            <small>Reaches 10k viewers/day</small>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>CineVerse</h3>
+                    <p>Your ultimate destination for movie discovery and reviews.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#trending">Trending</a></li>
+                        <li><a href="#movies">Movies</a></li>
+                        <li><a href="#genres">Genres</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>tuyizereomega@gmail.com</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 CineVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/movies.js"></script>
+    <script src="js/main.js"></script>
+    <!-- Terms & Conditions Modal -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <h2>Terms & Conditions</h2>
+            <div class="terms-text">
+                <!-- Your terms content here -->
+                <p><strong>Last Updated:</strong> January 1, 2023</p>
+
+                <h3>1. Copyright Notice</h3>
+                <p>All movie content is provided for personal use only. Redistribution is prohibited.</p>
+
+                <h3>2. Age Restriction</h3>
+                <p>You must be at least 18 years old to use this service.</p>
+
+                <h3>3. Data Collection</h3>
+                <p>We collect anonymous usage statistics to improve our service.</p>
+
+                <!-- Add more sections as needed -->
+            </div>
+            <div class="modal-actions">
+                <button id="declineTerms" class="btn-decline">Decline</button>
+                <button id="acceptTerms" class="btn-accept">I Accept</button>
+            </div>
+        </div>
+    </div>
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/+250793748035" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+</body>
+
+</html>

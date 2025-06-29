@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Details | CineVerse</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">CineVerse</a>
+            <div class="nav-links">
+                <a href="#trending">Trending</a>
+                <a href="#movies">Movies</a>
+                <a href="#genres">Genres</a>
+
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Search movies...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <a href="#trending">Trending</a>
+            <a href="#movies">Movies</a>
+            <a href="#genres">Genres</a>
+            <div class="search-box">
+                <input type="text" placeholder="Search movies...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar">
+        <!-- ... same nav as index.html ... -->
+    </nav>
+
+    <!-- Movie Details Section -->
+    <section class="movie-details">
+        <div class="container">
+            <div class="movie-details-content">
+                <div class="movie-poster-container">
+                    <img id="movie-poster" src="" alt="Movie Poster" class="movie-poster-large">
+                </div>
+                <div class="movie-info-container">
+                    <h1 id="movie-title"></h1>
+                    <div class="movie-meta">
+                        <span id="movie-year"></span>
+                        <span class="movie-rating"><i class="fas fa-star"></i> <span id="movie-rating"></span></span>
+                        <span id="movie-runtime"></span>
+                    </div>
+                    <div class="movie-genres" id="movie-genres"></div>
+                    <p class="movie-description" id="movie-description"></p>
+
+                    <div class="movie-cast">
+                        <h3>Cast</h3>
+                        <div class="cast-grid" id="movie-cast"></div>
+                    </div>
+
+                    <div class="movie-actions">
+                        <button class="btn btn-primary"><i class="fas fa-play"></i> Watch Trailer</button>
+                        <button class="btn btn-secondary"><i class="fas fa-bookmark"></i> Add to Watchlist</button>
+                    </div>
+                </div>
+            </div>
+            <div class="download-container">
+                <a href="YOUR_DIRECT_DOWNLOAD_LINK" id="directDownload" class="download-btn" download>
+                    <i class="fas fa-download"></i> Download Movie
+                </a>
+                <small class="download-note">File: MP4 (1.5GB) • 1080p</small>
+            </div>
+
+            <!-- Trailer Section -->
+            <div class="trailer-section">
+                <h2>Trailer</h2>
+                <div class="trailer-container">
+                    <iframe id="movie-trailer" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <!-- Similar Movies -->
+            <div class="similar-movies">
+                <h2>Similar Movies</h2>
+                <div class="movies-grid" id="similar-movies"></div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>CineVerse</h3>
+                        <p>Your ultimate destination for movie discovery and reviews.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="#trending">Trending</a></li>
+                            <li><a href="#movies">Movies</a></li>
+                            <li><a href="#genres">Genres</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Contact</h3>
+                        <p>info@cineverse.com</p>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2023 CineVerse. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </footer>
+
+    <script src="js/movies.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get movie ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const movieId = parseInt(urlParams.get('id'));
+
+            // Get movie details
+            const movie = getMovieById(movieId);
+
+            if (movie) {
+                // Populate movie details
+                document.getElementById('movie-poster').src = movie.poster;
+                document.getElementById('movie-title').textContent = movie.title;
+                document.getElementById('movie-year').textContent = movie.year;
+                document.getElementById('movie-rating').textContent = movie.rating;
+                document.getElementById('movie-runtime').textContent = movie.runtime;
+                document.getElementById('movie-description').textContent = movie.description;
+                document.getElementById('movie-trailer').src = movie.trailer;
+
+                // Populate genres
+                const genresContainer = document.getElementById('movie-genres');
+                genresContainer.innerHTML = movie.genre.map(g =>
+                    `<span class="genre-tag">${g}</span>`
+                ).join('');
+
+                // Populate cast
+                const castContainer = document.getElementById('movie-cast');
+                castContainer.innerHTML = movie.cast.map(actor => `
+                    <div class="cast-member">
+                        <div class="cast-photo"></div>
+                        <span>${actor}</span>
+                    </div>
+                `).join('');
+
+                // Find similar movies (by genre)
+                const similarMovies = movies.filter(m =>
+                    m.id !== movieId &&
+                    m.genre.some(g => movie.genre.includes(g))
+                ).slice(0, 4);
+
+                // Display similar movies
+                const similarContainer = document.getElementById('similar-movies');
+                similarMovies.forEach(m => {
+                    similarContainer.appendChild(createMovieCard(m));
+                });
+            } else {
+                // Movie not found, redirect to home
+                window.location.href = 'index.html';
+            }
+
+            // Reuse the createMovieCard function from main.js
+            function createMovieCard(movie) {
+                const card = document.createElement('div');
+                card.className = 'movie-card';
+
+                card.innerHTML = `
+                    <img src="${movie.poster}" alt="${movie.title}" class="movie-poster">
+                    <div class="movie-info">
+                        <h3 class="movie-title">${movie.title}</h3>
+                        <div class="movie-meta">
+                            <span>${movie.year}</span>
+                            <span class="movie-rating">
+                                <i class="fas fa-star"></i> ${movie.rating}
+                            </span>
+                        </div>
+                    </div>
+                `;
+
+                card.addEventListener('click', function () {
+                    window.location.href = `movie.html?id=${movie.id}`;
+                });
+
+                return card;
+            }
+
+            // Inside movie.html's script
+            document.addEventListener('DOMContentLoaded', async () => {
+                const urlParams = new URLSearchParams(window.location.search);
+                const movieId = parseInt(urlParams.get('id'));
+                const movie = getMovieById(movieId);
+
+                if (movie) {
+                    // Populate movie data
+                    document.getElementById('movie-poster').src = movie.poster;
+                    document.getElementById('movie-title').textContent = movie.title;
+                    document.getElementById('movie-year').textContent = movie.year;
+                    document.getElementById('movie-rating').textContent = movie.rating;
+                    document.getElementById('movie-runtime').textContent = movie.runtime;
+                    document.getElementById('movie-description').textContent = movie.description;
+
+                    // Set YouTube trailer
+                    const trailerUrl = `https://www.youtube.com/embed/${movie.trailer}?autoplay=0`;
+                    document.getElementById('movie-trailer').src = trailerUrl;
+
+                    // Display cast
+                    const castContainer = document.getElementById('movie-cast');
+                    movie.cast.forEach(actor => {
+                        castContainer.innerHTML += `
+        <div class="cast-member">
+          <div class="cast-photo" style="background-image: url('https://via.placeholder.com/150x150?text=${actor.split(' ')[0]}')"></div>
+          <span>${actor}</span>
+        </div>
+      `;
+                    });
+
+                    // Show similar movies (by genre)
+                    const similarMovies = movies.filter(m =>
+                        m.id !== movie.id &&
+                        m.genre.some(g => movie.genre.includes(g))
+                    ).slice(0, 4);
+
+                    const similarContainer = document.getElementById('similar-movies');
+                    similarMovies.forEach(m => {
+                        similarContainer.innerHTML += `
+        <div class="movie-card" onclick="window.location.href='movie.html?id=${m.id}'">
+          <img src="${m.poster}" alt="${m.title}" class="movie-poster">
+          <div class="movie-info">
+            <h3 class="movie-title">${m.title}</h3>
+            <div class="movie-meta">
+              <span>${m.year}</span>
+              <span class="movie-rating"><i class="fas fa-star"></i> ${m.rating}</span>
+            </div>
+          </div>
+        </div>
+      `;
+                    });
+                } else {
+                    window.location.href = 'index.html';
+                }
+            });
+        });
+    </script>
+</body>
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/+250793748035" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover the latest movies, trailers, and reviews">
+    <meta name="keywords" content="movies, films, cinema, trailers, reviews">
+    <title>Your Watchlist | CineVerse</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">CineVerse</a>
+            <div class="nav-links">
+                <a href="#trending">Trending</a>
+                <a href="#movies">Movies</a>
+                <a href="#genres">Genres</a>
+                <a href="admin.html" class="admin-link">Admin</a>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Search movies...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+
+        </div>
+    </nav>
+
+    <section class="watchlist-section">
+        <div class="container">
+            <h1>Your Watchlist</h1>
+            <div class="movies-grid" id="watchlist-movies">
+                <!-- Filled dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <script src="js/movies.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const watchLaterList = JSON.parse(localStorage.getItem('watchLater')) || [];
+            const container = document.getElementById('watchlist-movies');
+
+            if (watchLaterList.length === 0) {
+                container.innerHTML = '<p>Your watchlist is empty. Add movies from the homepage!</p>';
+            } else {
+                watchLaterList.forEach(movieId => {
+                    const movie = getMovieById(movieId);
+                    if (movie) {
+                        container.appendChild(createMovieCard(movie));
+                    }
+                });
+            }
+        });
+
+        // Reuse the same createMovieCard function from main.js
+        function createMovieCard(movie) {
+            const card = document.createElement('div');
+            card.className = 'movie-card';
+            card.innerHTML = `
+        <img src="${movie.poster}" alt="${movie.title}" class="movie-poster">
+        <div class="movie-info">
+          <h3 class="movie-title">${movie.title}</h3>
+          <div class="movie-meta">
+            <span>${movie.year}</span>
+            <span class="movie-rating"><i class="fas fa-star"></i> ${movie.rating}</span>
+          </div>
+          <button class="btn-watch-later added" data-id="${movie.id}">
+            <i class="fas fa-check"></i> Added
+          </button>
+        </div>
+      `;
+            card.addEventListener('click', (e) => {
+                if (!e.target.closest('.btn-watch-later')) {
+                    window.location.href = `movie.html?id=${movie.id}`;
+                }
+            });
+            return card;
+        }
+    </script>
+</body>
+
+</html>
